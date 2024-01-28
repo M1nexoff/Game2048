@@ -1,6 +1,8 @@
 package com.example.game2048.ui.game
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -24,11 +26,19 @@ class GameScreen(val isNew:Boolean) : Fragment(R.layout.screen_game) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val pref: SharedPreferences =
+            requireContext().getSharedPreferences("AAA", Context.MODE_PRIVATE)
+
         if (!isNew){
             viewModel.loadLast()
         }else{
+            viewModel.getLastScore()
             viewModel.restart()
         }
+        if (pref.getBoolean("aa", true)){
+            viewModel.restart()
+        }
+        pref.edit().putBoolean("aa",false).apply()
         loadViews()
         binding.lose.visibility = View.GONE
         setupObservers()

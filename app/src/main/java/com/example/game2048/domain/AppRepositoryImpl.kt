@@ -27,6 +27,7 @@ class AppRepositoryImpl : AppRepository {
             }
         }
 
+
     init {
         initializeMatrix()
     }
@@ -41,11 +42,9 @@ class AppRepositoryImpl : AppRepository {
 
         for (i in matrix.indices) {
             for (j in matrix[i].indices) {
-                // Check right
                 if (j < matrixSize - 1 && matrix[i][j] == matrix[i][j + 1]) {
                     return false
                 }
-                // Check down
                 if (i < matrixSize - 1 && matrix[i][j] == matrix[i + 1][j]) {
                     return false
                 }
@@ -106,144 +105,149 @@ class AppRepositoryImpl : AppRepository {
         return pref.getHighScore()
     }
 
-    override fun getLastScore(): Int {
-        return pref.getLastScore()
-    }
+    override fun moveUp() {
+        var moved = false
 
+        for (j in matrix[0].indices) {
+            var lastMergedPosition = -1
+
+            for (i in 1 until matrixSize) {
+                if (matrix[i][j] != 0) {
+                    var targetPosition = i - 1
+
+                    while (targetPosition >= 0 && matrix[targetPosition][j] == 0) {
+                        matrix[targetPosition][j] = matrix[targetPosition + 1][j]
+                        matrix[targetPosition + 1][j] = 0
+                        targetPosition--
+                        moved = true
+                    }
+
+                    if (targetPosition >= 0 && matrix[targetPosition][j] == matrix[targetPosition + 1][j]
+                        && lastMergedPosition != targetPosition
+                    ) {
+                        matrix[targetPosition][j] *= 2
+                        score += matrix[targetPosition][j]
+                        matrix[targetPosition + 1][j] = 0
+                        lastMergedPosition = targetPosition
+                        moved = true
+                    }
+                }
+            }
+        }
+
+        if (moved) {
+            addRandomTile()
+        }
+    }
 
     override fun moveRight() {
-        matrix = matrix.map { slideToRight(it) }.toTypedArray()
-        addRandomTile()
-    }
+        var moved = false
 
-    private fun slideToRight(row: Array<Int>): Array<Int> {
-        val nRow = IntArray(matrixSize)
-        var i = matrixSize - 1
-        var j = matrixSize - 1
+        for (i in matrix.indices) {
+            var lastMergedPosition = -1
 
-        while (i >= 0) {
-            when {
-                row[i] == 0 -> i--
-                row[i] != 0 && nRow[j] == 0 -> {
-                    nRow[j] = row[i]
-                    i--
+            for (j in matrixSize - 2 downTo 0) {
+                if (matrix[i][j] != 0) {
+                    var targetPosition = j + 1
+
+                    while (targetPosition < matrixSize && matrix[i][targetPosition] == 0) {
+                        matrix[i][targetPosition] = matrix[i][targetPosition - 1]
+                        matrix[i][targetPosition - 1] = 0
+                        targetPosition++
+                        moved = true
+                    }
+
+                    if (targetPosition < matrixSize && matrix[i][targetPosition] == matrix[i][targetPosition - 1]
+                        && lastMergedPosition != targetPosition
+                    ) {
+                        matrix[i][targetPosition] *= 2
+                        score += matrix[i][targetPosition]
+                        matrix[i][targetPosition - 1] = 0
+                        lastMergedPosition = targetPosition
+                        moved = true
+                    }
                 }
-                row[i] == nRow[j] -> {
-                    nRow[j] += row[i]
-                    score += nRow[j]
-                    i--
-                    j--
-                }
-                else -> j--
             }
         }
 
-        return nRow.toTypedArray()
-    }
-
-    override fun moveLeft() {
-        matrix = matrix.map { slideToLeft(it) }.toTypedArray()
-        addRandomTile()
-    }
-
-    private fun slideToLeft(row: Array<Int>): Array<Int> {
-        val nRow = IntArray(matrixSize)
-        var i = 0
-        var j = 0
-
-        while (i < matrixSize) {
-            when {
-                row[i] == 0 -> i++
-                row[i] != 0 && nRow[j] == 0 -> {
-                    nRow[j] = row[i]
-                    i++
-                }
-                row[i] == nRow[j] -> {
-                    nRow[j] += row[i]
-                    score += nRow[j]
-                    i++
-                    j++
-                }
-                else -> j++
-            }
+        if (moved) {
+            addRandomTile()
         }
-
-        return nRow.toTypedArray()
-    }
-
-    override fun moveUp() {
-        val newMatrix = Array(matrixSize) { Array(matrixSize) { 0 } }
-        for (j in 0 until matrixSize) {
-            val col = matrix.map { it[j] }.toIntArray()
-            val newCol = slideUp(col)
-            for (i in matrix.indices) {
-                newMatrix[i][j] = newCol[i]
-            }
-        }
-        matrix = newMatrix
-        addRandomTile()
-    }
-
-    private fun slideUp(col: IntArray): IntArray {
-        val nCol = IntArray(matrixSize)
-        var i = 0
-        var j = 0
-
-        while (i < matrixSize) {
-            when {
-                col[i] == 0 -> i++
-                col[i] != 0 && nCol[j] == 0 -> {
-                    nCol[j] = col[i]
-                    i++
-                }
-                col[i] == nCol[j] -> {
-                    nCol[j] += col[i]
-                    score += nCol[j]
-                    i++
-                    j++
-                }
-                else -> j++
-            }
-        }
-
-        return nCol
     }
 
     override fun moveDown() {
-        val newMatrix = Array(matrixSize) { Array(matrixSize) { 0 } }
-        for (j in 0 until matrixSize) {
-            val col = matrix.map { it[j] }.toIntArray()
-            val newCol = slideDown(col)
-            for (i in matrix.indices) {
-                newMatrix[i][j] = newCol[i]
-            }
-        }
-        matrix = newMatrix
-        addRandomTile()
-    }
+        var moved = false
 
-    private fun slideDown(col: IntArray): IntArray {
-        val nCol = IntArray(matrixSize)
-        var i = matrixSize - 1
-        var j = matrixSize - 1
+        for (j in matrix[0].indices) {
+            var lastMergedPosition = -1
 
-        while (i >= 0) {
-            when {
-                col[i] == 0 -> i--
-                col[i] != 0 && nCol[j] == 0 -> {
-                    nCol[j] = col[i]
-                    i--
+            for (i in matrixSize - 2 downTo 0) {
+                if (matrix[i][j] != 0) {
+                    var targetPosition = i + 1
+
+                    while (targetPosition < matrixSize && matrix[targetPosition][j] == 0) {
+                        matrix[targetPosition][j] = matrix[targetPosition - 1][j]
+                        matrix[targetPosition - 1][j] = 0
+                        targetPosition++
+                        moved = true
+                    }
+
+                    if (targetPosition < matrixSize && matrix[targetPosition][j] == matrix[targetPosition - 1][j]
+                        && lastMergedPosition != targetPosition
+                    ) {
+                        matrix[targetPosition][j] *= 2
+                        score += matrix[targetPosition][j]
+                        matrix[targetPosition - 1][j] = 0
+                        lastMergedPosition = targetPosition
+                        moved = true
+                    }
                 }
-                col[i] == nCol[j] -> {
-                    nCol[j] += col[i]
-                    score += nCol[j]
-                    i--
-                    j--
-                }
-                else -> j--
             }
         }
 
-        return nCol
+        if (moved) {
+            addRandomTile()
+        }
     }
+
+    override fun moveLeft() {
+        var moved = false
+
+        for (i in matrix.indices) {
+            var lastMergedPosition = -1
+
+            for (j in 1 until matrixSize) {
+                if (matrix[i][j] != 0) {
+                    var targetPosition = j - 1
+
+                    while (targetPosition >= 0 && matrix[i][targetPosition] == 0) {
+                        matrix[i][targetPosition] = matrix[i][targetPosition + 1]
+                        matrix[i][targetPosition + 1] = 0
+                        targetPosition--
+                        moved = true
+                    }
+
+                    if (targetPosition >= 0 && matrix[i][targetPosition] == matrix[i][targetPosition + 1]
+                        && lastMergedPosition != targetPosition
+                    ) {
+                        matrix[i][targetPosition] *= 2
+                        score += matrix[i][targetPosition]
+                        matrix[i][targetPosition + 1] = 0
+                        lastMergedPosition = targetPosition
+                        moved = true
+                    }
+                }
+            }
+        }
+
+        if (moved) {
+            addRandomTile()
+        }
+    }
+
+    override fun getLastScore(): Int {
+        score = pref.getLastScore()
+        return score
+    }
+
 }

@@ -58,4 +58,8 @@ class GameViewModel : ViewModel(){
     fun saveNothing() {
         repository.saveNothing()
     }
+
+    fun getLastScore() {
+        repository.getLastScore()
+    }
 }
