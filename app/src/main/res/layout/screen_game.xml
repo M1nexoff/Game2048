@@ -10,11 +10,11 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="36dp"
         android:fontFamily="@font/nunito"
         android:text="2048"
         android:textSize="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,11 +22,11 @@
         android:id="@+id/constraintLayout"
         android:layout_width="90dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
         android:background="@drawable/grey_bg"
-        app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <TextView
             android:id="@+id/textView2"
@@ -42,11 +42,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:fontFamily="@font/nunito"
             android:id="@+id/high_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
+            android:fontFamily="@font/nunito"
             android:text="Score"
             android:textColor="#FFFFFF"
             android:textSize="26dp"
@@ -56,13 +56,14 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="90dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/grey_bg"
-        app:layout_constraintBottom_toBottomOf="@+id/textView"
-        app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
-        app:layout_constraintTop_toTopOf="@+id/textView">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <TextView
             android:id="@+id/textView3"
@@ -78,11 +79,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:fontFamily="@font/nunito"
             android:id="@+id/score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
+            android:fontFamily="@font/nunito"
             android:text="Score"
             android:textColor="#FFFFFF"
             android:textSize="26dp"
@@ -95,17 +96,20 @@
         android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:background="@drawable/grey_bg"
-        app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
+        app:layout_constraintStart_toEndOf="@+id/constraintLayout2"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout">
 
         <ImageView
+            android:id="@+id/restart"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:padding="6dp"
             android:src="@drawable/ic_refresh" />
     </LinearLayout>
+
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -129,13 +133,13 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton style="@style/PlayButton" />
+            <androidx.appcompat.widget.AppCompatTextView style="@style/PlayButton" />
 
-            <androidx.appcompat.widget.AppCompatButton style="@style/PlayButton" />
+            <androidx.appcompat.widget.AppCompatTextView style="@style/PlayButton" />
 
-            <androidx.appcompat.widget.AppCompatButton style="@style/PlayButton" />
+            <androidx.appcompat.widget.AppCompatTextView style="@style/PlayButton" />
 
-            <androidx.appcompat.widget.AppCompatButton style="@style/PlayButton" />
+            <androidx.appcompat.widget.AppCompatTextView style="@style/PlayButton" />
         </androidx.appcompat.widget.LinearLayoutCompat>
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -143,13 +147,13 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton style="@style/PlayButton" />
+            <androidx.appcompat.widget.AppCompatTextView style="@style/PlayButton" />
 
-            <androidx.appcompat.widget.AppCompatButton style="@style/PlayButton" />
+            <androidx.appcompat.widget.AppCompatTextView style="@style/PlayButton" />
 
-            <androidx.appcompat.widget.AppCompatButton style="@style/PlayButton" />
+            <androidx.appcompat.widget.AppCompatTextView style="@style/PlayButton" />
 
-            <androidx.appcompat.widget.AppCompatButton style="@style/PlayButton" />
+            <androidx.appcompat.widget.AppCompatTextView style="@style/PlayButton" />
         </androidx.appcompat.widget.LinearLayoutCompat>
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -157,13 +161,13 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton style="@style/PlayButton" />
+            <androidx.appcompat.widget.AppCompatTextView style="@style/PlayButton" />
 
-            <androidx.appcompat.widget.AppCompatButton style="@style/PlayButton" />
+            <androidx.appcompat.widget.AppCompatTextView style="@style/PlayButton" />
 
-            <androidx.appcompat.widget.AppCompatButton style="@style/PlayButton" />
+            <androidx.appcompat.widget.AppCompatTextView style="@style/PlayButton" />
 
-            <androidx.appcompat.widget.AppCompatButton style="@style/PlayButton" />
+            <androidx.appcompat.widget.AppCompatTextView style="@style/PlayButton" />
         </androidx.appcompat.widget.LinearLayoutCompat>
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -171,14 +175,29 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton style="@style/PlayButton" />
+            <androidx.appcompat.widget.AppCompatTextView style="@style/PlayButton" />
 
-            <androidx.appcompat.widget.AppCompatButton style="@style/PlayButton" />
+            <androidx.appcompat.widget.AppCompatTextView style="@style/PlayButton" />
 
-            <androidx.appcompat.widget.AppCompatButton style="@style/PlayButton" />
+            <androidx.appcompat.widget.AppCompatTextView style="@style/PlayButton" />
 
-            <androidx.appcompat.widget.AppCompatButton style="@style/PlayButton" />
+            <androidx.appcompat.widget.AppCompatTextView style="@style/PlayButton" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <TextView
+        android:id="@+id/lose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/grey_bg"
+        android:fontFamily="@font/nunito"
+        android:padding="10dp"
+        android:text="You Lose"
+        android:textColor="@color/black"
+        android:textSize="50dp"
+        app:layout_constraintBottom_toBottomOf="@+id/outer_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/outer_container" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -38,7 +38,7 @@ fun Fragment.replaceScreenWithoutSave(fm: Fragment) {
 fun Fragment.popBackStack() {
     requireActivity().popBackStack()
 }
-fun Context.getDrawable(amount: Int):Int {
+fun Context.getNumberIcon(amount: Int):Int {
     return resources.getIdentifier("drawable/bg_item_${amount}", null, packageName)
 }
 fun String.myLog() = Log.d("TTT", this)
